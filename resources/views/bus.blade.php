@@ -10,7 +10,15 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 m-t-5">
+<nav class="navbar navbar-expand-lg text-bg-dark">
+    <div class="container-fluid">
+    <a class ="navbar-brand" style="color: white;">Szybkiszofer</a>
+
+    </div>    
+
+</nav>
+
 
 <div class="container-lg text-center">
     <div class="row column-gap-7">
@@ -24,7 +32,7 @@
         </div>
     </div>  
     <div class="row column-gap-7">
-        <div class="column" style="width:40%;">
+        <div class="column" style="width:50%;">
             <h1 class="display-3">Porównanie typów autobusów</h1>
             <canvas id="typeChart"></canvas>
             </div>
@@ -32,6 +40,12 @@
                 <h1 class="display-3">TOP10 najbardziej niepunktualnych autobusów</h1>
                 <canvas id="punctualityChart"></canvas>
                 </div>
+    </div>
+    <div class="row column-gap-7">
+        <div class="column" style="width:50%;">
+            <h1 class="display-3">TOP10 najwolniejszych kierowców Szczecina</h1>
+            <canvas id="slowChart"></canvas>
+            </div>
     </div>
 </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -110,7 +124,7 @@
 
         var ctx3 = document.getElementById('typeChart').getContext('2d');
         var myChart = new Chart(ctx3, {
-            type: 'pie',
+            type: 'doughnut',
             data: {
                 labels: ["Zwykła", "Przyśpieszona", "Pośpieszna", "Zastępcza", "Dodatkowa", "Specjalna", "Turystyczna"],
                 datasets: [{
@@ -180,6 +194,41 @@
             }
         });
 
+        var ctx4 = document.getElementById('slowChart').getContext('2d');
+        var myChart = new Chart(ctx4, {
+            type: 'bar',
+            data: {
+                labels: @json($dataSlowLabels),
+                datasets: [{
+                    label: 'Prędkość (km/h)',
+                    data: @json($slowValues),
+                    backgroundColor:[ 
+                    'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(201, 203, 207, 0.2)'],
+                    borderColor: [
+                    'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(54, 162, 235)',
+      'rgb(153, 102, 255)',
+      'rgb(201, 203, 207)'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
 
     </script>
 </body>

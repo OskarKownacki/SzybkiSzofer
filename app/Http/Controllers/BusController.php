@@ -42,6 +42,21 @@ class BusController extends Controller
             $punctuality=[];
             $punctualityNames=[];
             $punctualityValues=[];
+            $dataSlow = $data->where('velocity','!=',0)->sortBy('velocity')->values()->all();
+            $dataSlow = collect($dataSlow);
+            $dataSlow = $dataSlow->take(10);
+            $dataSlowLabels = $dataSlow->keys()->toArray();
+            $dataSlowValues = $dataSlow;
+            $slowValues=[];
+
+
+
+            foreach($dataSlowValues as $dataSlowValue)
+            {
+                $slowValues[] = $dataSlowValue["velocity"];
+            }
+           
+
 
             foreach($data10 as $velocity)
             {
@@ -96,7 +111,7 @@ class BusController extends Controller
 
 
             // Handle the retrieved weather data as needed (e.g., pass it to a view)
-            return view('bus', ['busData' => $data, 'velocities' => $velocities, 'labels' => $linesVelo, 'times' => $times, 'typeData' => $dataType, 'punctualityNames' => $punctualityNames, 'punctualityValues' => $punctualityValues]);
+            return view('bus', ['busData' => $data, 'velocities' => $velocities, 'labels' => $linesVelo, 'times' => $times, 'typeData' => $dataType, 'punctualityNames' => $punctualityNames, 'punctualityValues' => $punctualityValues, 'dataSlowLabels' => $dataSlowLabels, 'slowValues' => $slowValues]);
         } catch (\Exception $e) {
             // Handle any errors that occur during the API request
             return view('api_error', ['error' => $e->getMessage()]);
